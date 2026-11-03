@@ -19,8 +19,10 @@ export default async function ProductPage({ params }: { params: { slug: string }
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <div className="grid gap-8 md:grid-cols-2">
-        <div className="grid h-72 place-items-center overflow-hidden rounded-2xl bg-gradient-to-br from-teal to-navy p-6 text-center text-xl font-bold text-white">
-          {p.thumbnail_url ? /* eslint-disable-next-line @next/next/no-img-element */ <img src={p.thumbnail_url} alt={p.title} className="h-full w-full object-cover" /> : p.title}
+        <div className="relative h-72 overflow-hidden rounded-2xl bg-sky">
+  {p.thumbnail_url ? /* eslint-disable-next-line @next/next/no-img-element */ <img src={p.thumbnail_url} alt={p.title} className="absolute inset-0 h-full w-full object-contain" /> : <span className="grid h-full place-items-center bg-gradient-to-br from-teal to-navy p-6 text-center text-xl font-bold text-white">{p.title}</span>}
+</div>
+        {p.thumbnail_url ? /* eslint-disable-next-line @next/next/no-img-element */ <img src={p.thumbnail_url} alt={p.title} className="h-full w-full object-cover" /> : p.title}
         </div>
         <div className="space-y-3">
           {cat && <Link href={`/category/${cat.slug}`} className="text-sm font-semibold text-teal">{cat.name}</Link>}
