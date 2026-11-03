@@ -11,8 +11,13 @@ export type Product = {
 export default function ProductCard({ p }: { p: Product }) {
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white">
-      <Link href={`/product/${p.slug}`} className="grid h-36 place-items-center bg-gradient-to-br from-teal to-navy p-4 text-center font-bold text-white">
-        {p.thumbnail_url ? /* eslint-disable-next-line @next/next/no-img-element */ <img src={p.thumbnail_url} alt={p.title} className="h-full w-full object-cover" loading="lazy" /> : p.title}
+      <Link href={`/product/${p.slug}`} className="relative block aspect-[4/3] w-full overflow-hidden bg-sky">
+        {p.thumbnail_url ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img src={p.thumbnail_url} alt={p.title} className="absolute inset-0 h-full w-full object-contain" loading="lazy" />
+        ) : (
+          <span className="grid h-full place-items-center bg-gradient-to-br from-teal to-navy p-4 text-center font-bold text-white">{p.title}</span>
+        )}
       </Link>
       <div className="flex flex-1 flex-col gap-2 p-4">
         {p.categories && <Link href={`/category/${p.categories.slug}`} className="text-xs font-semibold text-teal">{p.categories.name}</Link>}
