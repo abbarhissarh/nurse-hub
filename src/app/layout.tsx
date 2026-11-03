@@ -4,11 +4,16 @@ import "./globals.css";
 import Header from "@/components/Header";
 import CartProvider from "@/components/CartProvider";
 import Link from "next/link";
+import { SITE } from "@/lib/site";
 
 const font = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
+const description = "Digital nursing notes, exam resources and clinical guides for nursing students and nurses in Nigeria.";
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE),
   title: { default: "Nurse Hub | Your Knowledge. Your Nursing Journey.", template: "%s | Nurse Hub" },
-  description: "Digital nursing notes, exam resources and clinical guides for nursing students and nurses in Nigeria.",
+  description,
+  openGraph: { siteName: "Nurse Hub", type: "website", locale: "en_NG", title: "Nurse Hub", description },
+  twitter: { card: "summary", title: "Nurse Hub", description },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

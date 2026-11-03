@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { verifyTransaction } from "@/lib/paystack";
+import { sendOrderEmails } from "@/lib/orderEmails";
 
 // Called by BOTH the return page and the webhook. Safe to call many times.
 export async function fulfilByReference(reference: string): Promise<{ ok: boolean; state: string }> {
@@ -22,5 +23,7 @@ export async function fulfilByReference(reference: string): Promise<{ ok: boolea
 
   const { data, error } = await db.rpc("fulfil_order", { p_reference: reference, p_amount: pay.amount });
   if (error) return { ok: false, state: "db_error" };
+  // Only the call that actually completed the order sends emails, so customers never get duplicates.
+  if (data === "fulfilled") { try { await sendOrderEmails(pay.order_id); } catch {} }
   return { ok: data === "fulfilled" || data === "already_fulfilled", state: String(data) };
 }

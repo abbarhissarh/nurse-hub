@@ -5,9 +5,14 @@ import CartLink from "./CartLink";
 export default async function Header() {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  let isAdmin = false;
+  if (user) {
+    const { data: p } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    isAdmin = p?.role === "admin";
+  }
   const links = [["Home", "/"], ["Shop", "/shop"], ["Categories", "/#categories"], ["About Us", "/about"], ["Contact", "/contact"]];
   const account = user
-    ? [["My Account", "/account"], ["My Library", "/library"], ["Orders", "/orders"]]
+    ? [["My Account", "/account"], ["My Library", "/library"], ["Orders", "/orders"], ...(isAdmin ? [["Admin", "/admin"]] : [])]
     : [["Login / Register", "/login"]];
   return (
     <header className="sticky top-0 z-30 bg-navy text-white">
