@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import ProductCard, { Product } from "@/components/ProductCard";
+import AddToCart from "@/components/AddToCart";
 import { naira, fileSize } from "@/lib/format";
 
 const sel = "id,title,slug,short_description,description,price,discount_price,thumbnail_url,file_type,file_size,category_id,categories(name,slug)";
@@ -27,7 +28,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
           <p className="text-2xl font-extrabold">{naira(p.discount_price ?? p.price)}{p.discount_price && <s className="ml-2 text-base font-normal text-muted">{naira(p.price)}</s>}</p>
           <p className="text-muted">Format: {p.file_type} · {fileSize(p.file_size)}</p>
           <p className="whitespace-pre-line">{p.description || p.short_description}</p>
-          <p className="rounded-xl bg-sky p-3 text-sm text-muted">Cart and secure checkout arrive in phase 2.</p>
+          <AddToCart item={{ id: p.id, slug: p.slug, title: p.title, price: p.discount_price ?? p.price }} />
         </div>
       </div>
       {related && related.length > 0 && <section className="mt-12"><h2 className="mb-4 text-2xl font-bold">Related products</h2>

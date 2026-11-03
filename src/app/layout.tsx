@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import CartProvider from "@/components/CartProvider";
 import Link from "next/link";
 
 const font = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
@@ -14,8 +15,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={font.variable}>
       <body className="font-sans">
-        <Header />
-        <main>{children}</main>
+        <CartProvider>
+          <Header />
+          <main>{children}</main>
+        </CartProvider>
         <footer className="mt-16 bg-navy py-10 text-sm text-slate-300">
           <div className="mx-auto grid max-w-6xl gap-6 px-4 sm:grid-cols-3">
             <div><b className="text-white">Nurse Hub</b><p>Your Knowledge. Your Nursing Journey.</p></div>
