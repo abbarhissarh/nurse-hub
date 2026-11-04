@@ -4,7 +4,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: { navy: "#102A43", teal: { DEFAULT: "#0D9488", dark: "#0b7a70" }, sky: "#EAF4FF", soft: "#F7FAFC", ink: "#1E293B", muted: "#64748B" },
-      fontFamily: { sans: ["var(--font-jakarta)", "system-ui", "sans-serif"] },
+      fontFamily: { sans: ["var(--font-jakarta)", "system-ui", "sans-serif"], display: ["var(--font-display)", "system-ui", "sans-serif"] },
     },
   },
   plugins: [],

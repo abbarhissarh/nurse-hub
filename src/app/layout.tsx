@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans, Sora } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import CartProvider from "@/components/CartProvider";
-import Link from "next/link";
 import { SITE } from "@/lib/site";
+import { getSettings } from "@/lib/settings";
 
-const font = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
+const body = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
+const display = Sora({ subsets: ["latin"], variable: "--font-display" });
 const description = "Digital nursing notes, exam resources and clinical guides for nursing students and nurses in Nigeria.";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
@@ -16,24 +18,17 @@ export const metadata: Metadata = {
   twitter: { card: "summary", title: "Nurse Hub", description },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const s = await getSettings();
   return (
-    <html lang="en" className={font.variable}>
+    <html lang="en" className={`${body.variable} ${display.variable}`}>
       <body className="font-sans">
         <CartProvider>
+          {s.announcement && <div className="bg-teal px-4 py-2 text-center text-sm font-semibold text-white">{s.announcement}</div>}
           <Header />
           <main>{children}</main>
         </CartProvider>
-        <footer className="mt-16 bg-navy py-10 text-sm text-slate-300">
-          <div className="mx-auto grid max-w-6xl gap-6 px-4 sm:grid-cols-3">
-            <div><b className="text-white">Nurse Hub</b><p>Your Knowledge. Your Nursing Journey.</p></div>
-            <div className="flex flex-col gap-1"><b className="text-white">Quick links</b>
-              <Link href="/shop">Shop</Link><Link href="/about">About Us</Link><Link href="/contact">Contact</Link></div>
-            <div className="flex flex-col gap-1"><b className="text-white">Policies</b>
-              <Link href="/privacy">Privacy Policy</Link><Link href="/terms">Terms and Conditions</Link><Link href="/refunds">Refund Policy</Link></div>
-          </div>
-          <p className="mx-auto mt-6 max-w-6xl px-4">© {new Date().getFullYear()} Nurse Hub. Materials are for learning and do not replace clinical guidelines or supervision.</p>
-        </footer>
+        <Footer />
       </body>
     </html>
   );
