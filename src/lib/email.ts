@@ -11,4 +11,6 @@ export async function sendEmail(p: { to: string; subject: string; html: string }
     if (!res.ok) console.error("Resend error", res.status, await res.text());
   } catch (e) { console.error("Email failed", e); }
 }
-export const esc = (s: unknown) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
+
+const ESCAPES: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+export const esc = (s: unknown) => String(s ?? "").replace(/[&<>"']/g, (c) => ESCAPES[c]);
