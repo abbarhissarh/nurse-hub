@@ -35,7 +35,7 @@ export default async function Home() {
             <Link href="/#categories" className="inline-flex items-center rounded-xl border border-white/70 px-5 py-2.5 text-sm font-semibold hover:bg-white/10">Browse Categories</Link></div>
         </div>
       </section>
-      <div className="mx-auto -mt-7 max-w-6xl px-4">
+      <div className="relative z-10 mx-auto -mt-7 max-w-6xl px-4">
         <form action="/shop" className="flex gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl" role="search">
           <input name="q" className="min-w-0 flex-1 rounded-xl px-3 py-2 outline-none" placeholder="Search by title, subject or exam, e.g. NMCN" aria-label="Search products" />
           <button className="btn">Search</button>
